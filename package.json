@@ -6,7 +6,8 @@
     "mysql2": "^2.3.3"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "name": "nh-employee-tracker",
   "description": "",
