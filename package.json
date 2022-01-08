@@ -4,5 +4,24 @@
     "inquirer": "^8.2.0",
     "jest": "^27.4.7",
     "mysql2": "^2.3.3"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "nh-employee-tracker",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickNocc/NH-Employee-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NickNocc/NH-Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/NickNocc/NH-Employee-Tracker#readme"
 }
