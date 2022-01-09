@@ -1,8 +1,15 @@
-const inquirer = require(`inquirer`);
-const Employee = require(`./utils/employee`);
-const Department = require(`./utils/department`);
-const Role = require(`./utils/role`);
-const mysql = require('mysql2');
+const main = require('./utils/prompts');
+const mysql = require(`mysql2`);
+const db = require(`./db/connection`);
 
-console.log(mysql);
-console.log(Role);
+const sql = `SOURCE ./db/db.sql;`
+
+db.query(sql, (err, result) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    return result;
+})
+
+main();

@@ -1,4 +1,7 @@
 const inquirer = require(`inquirer`);
+const Employee = require(`./employee`);
+const {Department, getDepartments} = require(`./department`);
+const Role = require(`./role`);
 
 const main = () => {
     inquirer.prompt([
@@ -14,12 +17,13 @@ const main = () => {
         switch (choice) {
             case `View all departments`:
                 console.log('frick1');
+                getDepartments();
                 break;
             case `View all roles`:
                 console.log('frick2');
                 break;
             case `View all employees`:
-                console.log('frick3');
+                getDepartments();
                 break;
             case `Add a department`:
                 addDept();
@@ -51,6 +55,8 @@ const addDept = () => {
         console.log(name);
         console.log(`The ${name} department has been created!`);
         // SQL code goes here
+        let test = new Department(name);
+        console.log(test);
         main();
     });
 };
@@ -115,6 +121,4 @@ const updateEmp = () => {
         main();
     })
 }
-
-
-main();
+module.exports = main;
