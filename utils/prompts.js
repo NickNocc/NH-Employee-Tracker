@@ -2,8 +2,21 @@ const inquirer = require(`inquirer`);
 const Employee = require(`./employee`);
 const {Department, getDepartments} = require(`./department`);
 const Role = require(`./role`);
+const db = require(`../db/connection`);
+
+// STUCK AT CREATING DATABASE INITIALLY | LOOK TO MORE INDIVIDUAL USES?
 
 const main = () => {
+    const sql = `SOURCE db/schema.sql;`
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        return result;
+    })
+
     inquirer.prompt([
         {
             type: `list`,
@@ -121,4 +134,6 @@ const updateEmp = () => {
         main();
     })
 }
+
+main();
 module.exports = main;
