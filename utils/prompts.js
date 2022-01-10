@@ -1,22 +1,12 @@
 const inquirer = require(`inquirer`);
 const Employee = require(`./employee`);
-const {Department, getDepartments} = require(`./department`);
+const Department = require(`./department`);
 const Role = require(`./role`);
 const db = require(`../db/connection`);
+require('console.table');
 
-// STUCK AT CREATING DATABASE INITIALLY | LOOK TO MORE INDIVIDUAL USES?
 
-const main = () => {
-    const sql = `SOURCE db/schema.sql;`
-
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        return result;
-    })
-
+function main() {
     inquirer.prompt([
         {
             type: `list`,
@@ -29,14 +19,13 @@ const main = () => {
         console.log("Choice: " + choice);
         switch (choice) {
             case `View all departments`:
-                console.log('frick1');
                 getDepartments();
                 break;
             case `View all roles`:
-                console.log('frick2');
+                viewRole();
                 break;
             case `View all employees`:
-                getDepartments();
+                viewEmp();
                 break;
             case `Add a department`:
                 addDept();
@@ -45,18 +34,60 @@ const main = () => {
                 addRole();
                 break;
             case `Add an employee`:
-                console.log('frick4');
                 addEmp();
                 break;
             case `Update employee's role`:
                 updateEmp();
                 break;
         }
-    });
+    })
 };
 
+function getDepartments() {
 
-const addDept = () => {
+    const sql = `SELECT * FROM department;`;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+          }
+          console.table(result);
+          main();
+    })
+
+};
+
+function viewRole() {
+    
+    const sql = `SELECT * FROM role;`;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+          }
+        console.table(result);
+        main();
+    })
+}
+
+function viewEmp() {
+
+    const sql = `SELECT * FROM employee`;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+          }
+        console.table(result);
+        main();
+    })
+}
+
+
+function addDept() {
     inquirer.prompt([
         {
             type: `input`,
@@ -65,16 +96,18 @@ const addDept = () => {
         }
     ]).then(answer => {
         let name = answer.deptName;
-        console.log(name);
-        console.log(`The ${name} department has been created!`);
-        // SQL code goes here
-        let test = new Department(name);
-        console.log(test);
+        let newDept = new Department(name);
+        console.log(`
+        ========================================
+        The ${name} department has been created!
+        ========================================
+        `);
+
         main();
     });
 };
 
-const addRole = () => {
+function addRole() {
     inquirer.prompt([
         {
             type: `input`,
@@ -89,16 +122,20 @@ const addRole = () => {
         {
             type: `input`,
             name: `roleDept`,
-            message: `What department does this role work in?`
+            message: `Please enter the department id.`
         }
     ]).then(answers => {
-        console.log(answers);
-        // SQL code goes here
+        let roleName = answers.roleName;
+        let roleSalary = answers.roleSalary;
+        let roleDept = answers.roleDept;
+        
+        let newRole = new Role(roleName, roleSalary, roleDept);
+
         main();
     })
 };
 
-const addEmp = () => {
+function addEmp() {
     inquirer.prompt([
         {
             type: `input`,
@@ -108,7 +145,7 @@ const addEmp = () => {
         {
             type: `input`,
             name: `empRole`,
-            message: `Please enter this employee's role.`
+            message: `Please enter this employee's role id.`
         },
         {
             type: `input`,
@@ -116,12 +153,24 @@ const addEmp = () => {
             message: `Please enter the ID of this employee's manager.`
         },
     ]).then(answer => {
-        console.log(answer);
+        let empName = answer.empName;
+        let empRole = answer.empRole;
+        let empManaid = answer.empManager;
+
+        let newEmp = new Employee(empName, empRole, empManaid) 
+
+        console.log(`
+        ========================================
+        Employee has been added to the database!
+        ========================================
+        `
+        );
+
         main();
     })
 };
 
-const updateEmp = () => {
+function updateEmp() {
     inquirer.prompt([
         {
             type: `input`,
@@ -136,4 +185,6 @@ const updateEmp = () => {
 }
 
 main();
-module.exports = main;
+
+
+// module.exports = main();
