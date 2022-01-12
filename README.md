@@ -11,7 +11,6 @@ This app uses mysql to create a database for a given business. The database incl
 * Open your preferred command line program and navigate the the root directory.
 * Run 'npm i' to install of the necessary dependecies.
 * Use 'npm start' to start the program.
-***
 
 ## Questions
 
