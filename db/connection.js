@@ -1,5 +1,5 @@
 mysql = require(`mysql2`);
-
+// Connects to db
 const db = mysql.createConnection(
     {
         host: `localhost`,
@@ -9,15 +9,5 @@ const db = mysql.createConnection(
     }
 )
 
-const starter = function() {
-    const sql = `SOURCE db.sql;`
-
-    db.query(sql, (err, result) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        return result;
-    })
-}
+// Exports our connection to the db
 module.exports = db;

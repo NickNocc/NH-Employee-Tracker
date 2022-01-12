@@ -9,7 +9,7 @@ class Role {
 
         const sql = `INSERT INTO role (role_title, role_salary, department_id) Values (?, ?, ?)`;
         const params = [title, salary, deptId];
-
+        // Takes our sql statement and params to add this to db
         db.query(sql, params, (err, result) => {
             if (err) {
                 console.log(err);
